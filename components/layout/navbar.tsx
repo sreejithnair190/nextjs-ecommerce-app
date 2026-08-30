@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import { Search, User, ShoppingBag, Sun, Moon, Heart } from "lucide-react";
 
@@ -11,6 +12,7 @@ export function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -71,12 +73,22 @@ export function Navbar() {
             <Search className="w-5 h-5" />
           </button>
           
-          <button
-            className="hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-variant"
-            aria-label="Account"
-          >
-            <User className="w-5 h-5" />
-          </button>
+          {session?.user ? (
+            <Link
+              href="/profile"
+              className="hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-variant"
+              aria-label="Account"
+            >
+              <User className="w-5 h-5" />
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-full transition-colors"
+            >
+              Log in
+            </Link>
+          )}
           
           <button
             className="hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-variant text-muted-foreground"
