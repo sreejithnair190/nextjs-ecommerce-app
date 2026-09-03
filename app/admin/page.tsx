@@ -13,7 +13,7 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="min-h-[80vh] p-8">
+    <div className="p-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-2 text-foreground">Admin Dashboard</h1>
         <p className="text-muted-foreground mb-8">Welcome back, {session.user.name || "Admin"}.</p>
